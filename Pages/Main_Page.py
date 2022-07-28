@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import NO
 
+import time
+
 import pandas as pd
 from PIL import ImageTk, Image
 
@@ -14,6 +16,7 @@ from Pages.Upload_Data import Upload_data
 from Pages.Add_Brands import Add_Page
 from Pages.Inventory import Inventory_Page
 from Pages.Test_Search_Page import Search_Page
+from Pages.Motorola_Email import Motorola_Page
 
 ####  FUNÇÕES DE ELEMENTOS TKINTER #######
 #Função para criar CeckButton
@@ -31,21 +34,25 @@ def Create_Status(Frame_name, Text_value, Color):
 
 
 #################### FUNÇÕES DE SPIDERS ##########################
+def teste_status_bar():
+
+    if pb['value'] < 100:
+        pb['value'] += 20
+    
+    print(pb['value'])
+
 def Start_Amazon(Marketplace_var, brand):
     #Importando a função
     from Bots.Amazon import Amazon_Final
 
     if Marketplace_var.get() == "Ligado":
+        global pb 
 
-        Amazon_Status.config(foreground="orange", text="Buscando")
+        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb.grid(row=1,column=1,pady=(0,10))
 
-        Amazon_Status.update_idletasks()
+        #Amazon_Final(brand)
 
-        Amazon_Final(brand)
-
-        Amazon_Status.config(foreground="green", text="Finalizado")
-
-        Amazon_Status.update_idletasks()
     else:
         Amazon_Status.config(foreground="red", text="Desativado")
 
@@ -111,15 +118,10 @@ def Start_Kabum(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        Kabum_Status.config(foreground="orange", text="Buscando")
+        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb.grid(row=3,column=1,pady=(0,10))
 
-        Kabum_Status.update_idletasks()
-
-        Kabum_final(brand)
-
-        Kabum_Status.config(foreground="green", text="Finalizado")
-
-        Kabum_Status.update_idletasks()
+        #Kabum_final(brand)
     else:
         Kabum_Status.config(foreground="red", text="Desativado")
 
@@ -129,15 +131,11 @@ def Start_Magazine(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        Magazine_Status.config(foreground="orange", text="Buscando")
+        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb.grid(row=3,column=2,pady=(0,10))
 
-        Magazine_Status.update_idletasks()
+        #magalu_final(brand)
 
-        magalu_final(brand)
-
-        Magazine_Status.config(foreground="green", text="Finalizado")
-
-        Magazine_Status.update_idletasks()
     else:
         Magazine_Status.config(foreground="red", text="Desativado")
 
@@ -147,15 +145,11 @@ def Start_MercadoL(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        MercadoL_Status.config(foreground="orange", text="Buscando")
+        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb.grid(row=3,column=3,pady=(0,10))
 
-        MercadoL_Status.update_idletasks()
+        #Mercado_Livre_Final(brand)
 
-        Mercado_Livre_Final(brand)
-
-        MercadoL_Status.config(foreground="green", text="Finalizado")
-
-        MercadoL_Status.update_idletasks()
     else:
         MercadoL_Status.config(foreground="red", text="Desativado")
 
@@ -165,19 +159,15 @@ def Start_Shopee(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        Shopee_Status.config(foreground="orange", text="Buscando")
+        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb.grid(row=3,column=4,pady=(0,10))
 
-        Shopee_Status.update_idletasks()
+        #Shopee_final(brand)
 
-        Shopee_final(brand)
-
-        Shopee_Status.config(foreground="green", text="Finalizado")
-
-        Shopee_Status.update_idletasks()
     else:
         Shopee_Status.config(foreground="red", text="Desativado")
 
-def Start_Spiders(Amazon,Kabum,Magazine,mercado,shopee, brand_final):
+def Start_Spiders(Amazon,Kabum,Magazine,mercado,shopee,brand_final):
     Start_Amazon(Amazon, brand_final)
     Start_Magazine(Magazine,brand_final)
     Start_MercadoL(mercado, brand_final)
@@ -204,12 +194,7 @@ def Logs_records(table):
     c.close()
 
     log_text = []
-    data_list = [item['DATA'] for item in result]
-    hour_list = [item['HORA'] for item in result]
-    scripts_list = [item['SCRIPT'] for item in result]
-    marketplace_list = [item['MARKETPLACE'] for item in result]
-    brand_list = [item['BRAND'] for item in result]
-    status_list = [item['STATUS'] for item in result]
+
 
     for dictionary in result:
         log_text.append(list(dictionary.values()))
@@ -224,6 +209,7 @@ def Main_Page():
 
     #DEFININCO OS GLOBAIS NECESSÁRIOS PARA OS SPIDERS
     global Amazon_Status,Kabum_Status,Magazine_Status,MercadoL_Status,Shopee_Status
+    global Menu_Spiders, Main
 
 # Criando a página
     Main = tk.Tk()
@@ -270,7 +256,7 @@ def Main_Page():
     Search_Urls_button.grid(row=0, column=5, padx=10, pady=10, sticky="W")
 
     #Brand Protection
-    Motorola_Email_button = ttk.Button(Menu_Top_Frame, text="Motorola Email")
+    Motorola_Email_button = ttk.Button(Menu_Top_Frame, text="Motorola Email", command=Motorola_Page)
     Motorola_Email_button.grid(row=0, column=6, padx=10, pady=10, sticky="W")
 
     #Brand Protection
@@ -352,8 +338,8 @@ def Main_Page():
     Manual_Search_Button.grid(row=6, column=2,columnspan=2)
 
     #Botão para fazer revisão
-    Verification_Button = ttk.Button(Menu_Spiders, text="Verificação")
-    Verification_Button.grid(row=6, column=3, columnspan=2)
+    #Verification_Button = ttk.Button(Menu_Spiders, text="Verificação")
+    #Verification_Button.grid(row=6, column=3, columnspan=2)
 
     ## ------------------------------------#
 

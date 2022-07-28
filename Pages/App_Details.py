@@ -30,7 +30,7 @@ def updates_registration(root,lista):
         n_row = n_row + 1
 
 ###3 updatres
-updates_list = ["Spider - AliExpress",'Spider - Extra','Spider - Mercado Livre',"Puxar Manual - Estoque","Versão teste - Amazon/Shopee/Kabum","Melhora registros logs"]
+updates_list = ["Spider - AliExpress",'Spider - Extra','Spider - Mercado Livre',"Barra de carregamento - Spiders","Adicionar URL - Estoque","Motorola E-mail - Beta"]
 
 def details():
     # Criando a página
