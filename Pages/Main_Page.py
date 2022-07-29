@@ -212,6 +212,7 @@ def Main_Page():
     #DEFININCO OS GLOBAIS NECESSÁRIOS PARA OS SPIDERS
     global Amazon_Status,Kabum_Status,Magazine_Status,MercadoL_Status,Shopee_Status
     global Menu_Spiders, Main
+    global s
 
 # Criando a página
     Main = tk.Tk()
@@ -220,7 +221,7 @@ def Main_Page():
 
     Main.tk.call("source", "azure.tcl")
     Main.tk.call("set_theme", "light")
-
+    
     #Carreando a imagem
     load_img = Image.open('Img/Logo_pequeno.png').resize((50,60))
 
