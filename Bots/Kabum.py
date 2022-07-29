@@ -167,7 +167,7 @@ def dataset_creation(urls, sellers, prices, installments, titles):
 
     return df_raw
 
-def Kabum_final(brand, teste_var=None):
+def Kabum_final(brand,progress_bar,root, teste_var=None):
 
     if teste_var==None:
 
@@ -175,11 +175,21 @@ def Kabum_final(brand, teste_var=None):
         
         df = getting_n_creating_kabum(brand)
 
-        for url in tqdm(df['Urls_search']):
+        for url in df['Urls_search']:
             search_links(url)
 
-        for url in tqdm(Links_Kabum):
-            get_attributes(url)
+        Pb_number = 100 / int(len(Links_Kabum)) 
+
+        for url in Links_Kabum:
+            root.update_idletasks()
+            try:
+                time.sleep(5)
+                #get_attributes(url)
+                root.update_idletasks()
+                progress_bar['value'] = Pb_number
+                root.update_idletasks()
+            except:
+                pass
 
         Dataset_Kabum = dataset_creation(Links_Kabum, Sellers_Kabum, Price_Kabum, Installment_Kabum_quantidade, Title_Kabum)
 

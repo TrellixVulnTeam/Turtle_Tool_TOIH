@@ -66,7 +66,7 @@ def getting_n_creating_magazine_urls(brand,teste_var=None):
     df['Urls'] = df['Brand'] + "+" + df['Name']
 
     # Criando a nova coluna que são as urls de pesquisa
-    df['Urls_search'] = "https://www.magazineluiza.com.br/_next/data/-Fn-lbviZeEG5qOb4z6iR/busca/" + \
+    df['Urls_search'] = "https://www.magazineluiza.com.br/_next/data/_L7PZgfE82fD1Ra4TNQvy/busca/" + \
     df['Brand'][0] + "%2B" + df['Name'] + ".json?slug=busca&slug=" + \
     df['Brand'][0] + "%2B" + df['Name']
 
@@ -221,15 +221,24 @@ def get_attributes(url):
 
         id_installment_valor_total = id_installment_valor_total + 1
 
-def magalu_final(brand,teste_var=None):
+def magalu_final(brand,progress_bar,root,teste_var=None):
 
     if teste_var==None:
         Log('SPIDER','MAGALU',brand,'INICIOU')
 
         df = getting_n_creating_magazine_urls(brand)
 
-        for url in tqdm(df['Urls_search']):
-            get_attributes(url)
+        Pb_number = 100 / int(len(df)) 
+
+        for url in df['Urls_search']:
+            try:
+                get_attributes(url)
+                root.update_idletasks()
+                progress_bar['value'] += Pb_number
+                root.update_idletasks()
+            except:
+                pass
+
 
         dataset_magalu = creating_dataframe(Urls_Magalu, Sellers_Magalu, Price_Magalu, Installment_Magalu_valor_parcela, Installment_Magalu_quantidade, Installment_Magalu_valor_total, SKU_Magalu, Title_Magalu, brand)
 

@@ -18,6 +18,8 @@ from Pages.Inventory import Inventory_Page
 from Pages.Test_Search_Page import Search_Page
 from Pages.Motorola_Email import Motorola_Page
 
+
+
 ####  FUNÇÕES DE ELEMENTOS TKINTER #######
 #Função para criar CeckButton
 def Create_Checkbutton(Frame_name, Text_value, Variable_Value, grid_row, grid_column):
@@ -118,10 +120,10 @@ def Start_Kabum(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb.grid(row=3,column=1,pady=(0,10))
+        pb_kabum = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_kabum.grid(row=1,column=5,pady=(0,10))
 
-        #Kabum_final(brand)
+        Kabum_final(brand, pb_kabum,Main)
     else:
         Kabum_Status.config(foreground="red", text="Desativado")
 
@@ -131,10 +133,10 @@ def Start_Magazine(Marketplace_var, brand):
 
     if Marketplace_var.get() == "Ligado":
 
-        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb.grid(row=3,column=2,pady=(0,10))
+        pb_magazine = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_magazine.grid(row=3,column=1,pady=(0,10))
 
-        #magalu_final(brand)
+        magalu_final(brand,pb_magazine,Main)
 
     else:
         Magazine_Status.config(foreground="red", text="Desativado")
@@ -214,22 +216,25 @@ def Main_Page():
 # Criando a página
     Main = tk.Tk()
     Main.title("Turtle Brand Protection - V.1")
-    Main.geometry('870x400')
+    Main.geometry('1100x400')
+
+    Main.tk.call("source", "azure.tcl")
+    Main.tk.call("set_theme", "light")
 
     #Carreando a imagem
-    load_img = Image.open('Img/Logo_pequeno.png').resize((30,40))
+    load_img = Image.open('Img/Logo_pequeno.png').resize((50,60))
 
     #Renderizando a imagem
     Img = ImageTk.PhotoImage(load_img)
 
     #Colocando a imagem
-    Img_label = tk.Label(Main, image=Img, width=30, height=40)
+    Img_label = tk.Label(Main, image=Img, width=50, height=60)
     Img_label.place(x=10,y=10)
 
     ## ------------ MENU ------------------#
     #Colocando um menu
     Menu_Top_Frame = ttk.LabelFrame(Main)
-    Menu_Top_Frame.place(x=60, y=1)
+    Menu_Top_Frame.place(x=80, y=1)
 
     #Home
     New_Brand_button = ttk.Button(Menu_Top_Frame, text="Databases", command=Add_Page)
@@ -267,7 +272,7 @@ def Main_Page():
     ## Spiders ###
     #Criando o LabelFrame
     Menu_Spiders = tk.LabelFrame(Main, text="SPIDERS")
-    Menu_Spiders.place(x=450, y=70)
+    Menu_Spiders.place(x=480, y=80)
 
     #Buttton de Amazon
     AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
@@ -295,33 +300,33 @@ def Main_Page():
 
     #Buttton de Kabum
     KabumVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Kabum',KabumVar,2,1)
+    Create_Checkbutton(Menu_Spiders, 'Kabum',KabumVar,0,5)
     Kabum_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Kabum_Status.grid(row=3,column=1,pady=(0,10))
+    Kabum_Status.grid(row=1,column=5,pady=(0,10))
 
     #Buttton de Magazine
     MagazineVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Magazine',MagazineVar,2,2)
+    Create_Checkbutton(Menu_Spiders, 'Magazine',MagazineVar,2,1)
     Magazine_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Magazine_Status.grid(row=3,column=2,pady=(0,10))
+    Magazine_Status.grid(row=3,column=1,pady=(0,10))
 
     #Buttton de Mercado
     MercadoLVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'MercadoL',MercadoLVar,2,3)
+    Create_Checkbutton(Menu_Spiders, 'MercadoL',MercadoLVar,2,2)
     MercadoL_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    MercadoL_Status.grid(row=3,column=3,pady=(0,10))
+    MercadoL_Status.grid(row=3,column=2,pady=(0,10))
 
     #Buttton de Shopee
     ShopeeVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Shopee',ShopeeVar,2,4)
+    Create_Checkbutton(Menu_Spiders, 'Shopee',ShopeeVar,2,3)
     Shopee_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Shopee_Status.grid(row=3,column=4,pady=(0,10))
+    Shopee_Status.grid(row=3,column=3,pady=(0,10))
 
     #Buttton de AliExpress
     AliVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'AliExpress',AliVar,4,1)
+    Create_Checkbutton(Menu_Spiders, 'AliExpress',AliVar,2,4)
     Ali_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Ali_Status.grid(row=5,column=1,pady=(0,10))
+    Ali_Status.grid(row=3,column=4,pady=(0,10))
 
     #Utilizando a função
     Brands = list(getting_brands())
@@ -347,7 +352,7 @@ def Main_Page():
     ## --------------- LOGS ----------------------------------------- #
     #Criando a área de Logs
     Logs_Frame = ttk.LabelFrame(Main, text="Registros")
-    Logs_Frame.place(x=15, y=70)
+    Logs_Frame.place(x=15, y=80)
 
     #Criando a lista
     #Logs_List = tk.Listbox(Logs_Frame, width=62, height=5)
