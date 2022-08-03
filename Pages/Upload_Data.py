@@ -57,8 +57,6 @@ def Inspec_data(brand_name):
     Max_Price_Installment_Label.config(text="Maior valor (Installment): {}".format(data_filtrada['Installment Price'].max()))
     Min_Price_Installmnet_Label.config(text="Menor valor (Installment): {}".format(data_filtrada['Installment Price'].min()))
 
-    print(data_filtrada)
-
     #Atualizando botão
     Main_Button.config(text='Subir Dados', command=lambda: Upload_to_aws(data_filtrada, brand_name))
 
@@ -123,8 +121,11 @@ def Upload_data():
     global Main_Button
 
     Upload_Page = tk.Tk()
-    Upload_Page.geometry("290x180")
+    Upload_Page.geometry("360x180")
     Upload_Page.title("Turtle Brand Protection")
+
+    Upload_Page.tk.call("source", "azure.tcl")
+    Upload_Page.tk.call("set_theme", "light")
 
     #Utilizando a função
     Brands = list(getting_brands())
@@ -138,36 +139,36 @@ def Upload_data():
 
     #Botão para inspeção e posteriormente upload
     Main_Button = ttk.Button(Upload_Page, text="Inspecionar", command=lambda: Inspec_data(Brands_Choice.get()))
-    Main_Button.place(x=10,y=40)
+    Main_Button.place(x=10,y=60)
 
     #Criando as Labels referente aos dados
     #Tamanho dos dados
     Shape_Label = ttk.Label(Upload_Page,text="Quantidades de registros: ---")
-    Shape_Label.place(x=100,y=10)
+    Shape_Label.place(x=120,y=10)
 
     #Data antiga
     Minor_Date_Label = ttk.Label(Upload_Page,text="Data (antiga): --/--/----")
-    Minor_Date_Label.place(x=100,y=30)
+    Minor_Date_Label.place(x=120,y=30)
 
     #Data recente
     Maior_Date_Label = ttk.Label(Upload_Page,text="Data (Recente): --/--/----")
-    Maior_Date_Label.place(x=100,y=50)
+    Maior_Date_Label.place(x=120,y=50)
 
     #Data recente
     Max_Price_Cash_Label = ttk.Label(Upload_Page,text="Maior valor (Cash): -----")
-    Max_Price_Cash_Label.place(x=100,y=70)
+    Max_Price_Cash_Label.place(x=120,y=70)
 
     #Data recente
     Min_Price_Cash_Label = ttk.Label(Upload_Page,text="Menor valor (Cash): -----")
-    Min_Price_Cash_Label.place(x=100,y=90)
+    Min_Price_Cash_Label.place(x=120,y=90)
 
     #Data recente
     Max_Price_Installment_Label = ttk.Label(Upload_Page,text="Maior valor (Installment): -----")
-    Max_Price_Installment_Label.place(x=100,y=110)
+    Max_Price_Installment_Label.place(x=120,y=110)
 
     #Data recente
     Min_Price_Installmnet_Label = ttk.Label(Upload_Page,text="Menor valor (Installment): -----")
-    Min_Price_Installmnet_Label.place(x=100,y=130)
+    Min_Price_Installmnet_Label.place(x=120,y=130)
 
     Upload_Page.mainloop()
 

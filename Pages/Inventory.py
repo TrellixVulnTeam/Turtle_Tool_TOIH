@@ -77,7 +77,10 @@ def Add_urls(id, store, fromto,seller,hiperlink,item):
 def Add_inventory_urls_page():
     Page_Add = tk.Tk()
     Page_Add.title("Turtle Brand Protection - V.1")
-    Page_Add.geometry('1000x400')
+    Page_Add.geometry('1100x500')
+
+    Page_Add.tk.call("source", "azure.tcl")
+    Page_Add.tk.call("set_theme", "light")
 
     #Label Principal
     Principal_message = ttk.Label(Page_Add, text="Coloque as informações para subir")
@@ -165,7 +168,11 @@ def Add_inventory_urls_page():
 def Inventory_Page():
     Page = tk.Tk()
     Page.title("Turtle Brand Protection - V.1")
-    Page.geometry('200x100')
+    Page.geometry('250x100')
+
+    Page.tk.call("source", "azure.tcl")
+    Page.tk.call("set_theme", "light")
+
 
     connection = pymysql.connect(host='mysqlserver.cnzboqhfvndh.sa-east-1.rds.amazonaws.com',
                              user='admin',

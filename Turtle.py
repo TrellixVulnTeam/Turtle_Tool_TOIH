@@ -47,7 +47,10 @@ def Login_Page():
     # Criando a página
     Login_root = tk.Tk()
     Login_root.title("Turtle Brand Protection")
-    Login_root.geometry('320x300')
+    Login_root.geometry('360x330')
+
+    Login_root.tk.call("source", "azure.tcl")
+    Login_root.tk.call("set_theme", "light")
 
     # Carregando a imagem
     load_img = Image.open('Img/horizontal_mono_preto.png').resize((250, 70))

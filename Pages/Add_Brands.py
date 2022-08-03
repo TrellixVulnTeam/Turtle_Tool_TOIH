@@ -196,6 +196,9 @@ def Add_Page():
     Page_Add.title("Turtle Brand Protection - V.1")
     Page_Add.geometry('480x200')
 
+    Page_Add.tk.call("source", "azure.tcl")
+    Page_Add.tk.call("set_theme", "light")
+
     Databases_group = ttk.LabelFrame(Page_Add, text="Databases")
     Databases_group.place(x=20, y=15)
 

@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter.messagebox import NO
 
 import time
+from turtle import bgcolor
 
 import pandas as pd
 from PIL import ImageTk, Image
@@ -209,6 +210,9 @@ def Logs_records(table):
 
 def Main_Page():
 
+    #Style
+    
+
     #DEFININCO OS GLOBAIS NECESSÁRIOS PARA OS SPIDERS
     global Amazon_Status,Kabum_Status,Magazine_Status,MercadoL_Status,Shopee_Status
     global Menu_Spiders, Main
@@ -221,59 +225,71 @@ def Main_Page():
 
     Main.tk.call("source", "azure.tcl")
     Main.tk.call("set_theme", "light")
+
+    ############ ESTILOS ##########################
+    style = ttk.Style()
+    style.configure("White.TButton", foreground='white')
     
     #Carreando a imagem
-    load_img = Image.open('Img/Logo_pequeno.png').resize((50,60))
+    load_img = Image.open('Img/Logo_pequeno.png').resize((40,50))
 
     #Renderizando a imagem
     Img = ImageTk.PhotoImage(load_img)
 
     #Colocando a imagem
-    Img_label = tk.Label(Main, image=Img, width=50, height=60)
-    Img_label.place(x=10,y=10)
+    Img_label = tk.Label(Main, image=Img, width=40, height=50)
+    Img_label.place(x=15,y=0)
 
     ## ------------ MENU ------------------#
     #Colocando um menu
-    Menu_Top_Frame = ttk.LabelFrame(Main)
+    Menu_Top_Frame = ttk.Frame(Main, style='Card.TFrame')
     Menu_Top_Frame.place(x=80, y=1)
 
     #Home
-    New_Brand_button = ttk.Button(Menu_Top_Frame, text="Databases", command=Add_Page)
+    New_Brand_button = ttk.Button(Menu_Top_Frame, text="Databases",command=Add_Page)
     New_Brand_button.grid(row=0, column=0, padx=10, pady=10, sticky="W")
+    New_Brand_button.configure(style='White.TButton')
 
     #Brand Protection
     Upload_Data_button = ttk.Button(Menu_Top_Frame, text="Upload Data", command=Upload_data)
     Upload_Data_button.grid(row=0, column=1, padx=10, pady=10, sticky="W")
+    Upload_Data_button.configure(style='White.TButton')
 
     #Brand Protection
     Catalogo_button = ttk.Button(Menu_Top_Frame, text="Catálogo")
     Catalogo_button.grid(row=0, column=2, padx=10, pady=10, sticky="W")
+    Catalogo_button.configure(style='White.TButton')
 
     #Brand Protection
     Inventory_button = ttk.Button(Menu_Top_Frame, text="Inventory", command=Inventory_Page)
     Inventory_button.grid(row=0, column=3, padx=10, pady=10, sticky="W")
+    Inventory_button.configure(style='White.TButton')
 
     #Brand Protection
     Dashboard_button = ttk.Button(Menu_Top_Frame, text="Dashboard")
     Dashboard_button.grid(row=0, column=4, padx=10, pady=10, sticky="W")
+    Dashboard_button.configure(style='White.TButton')
 
     #Brand Protection
     Search_Urls_button = ttk.Button(Menu_Top_Frame, text="Automatics")
     Search_Urls_button.grid(row=0, column=5, padx=10, pady=10, sticky="W")
+    Search_Urls_button.configure(style='White.TButton')
 
     #Brand Protection
     Motorola_Email_button = ttk.Button(Menu_Top_Frame, text="Motorola Email", command=Motorola_Page)
     Motorola_Email_button.grid(row=0, column=6, padx=10, pady=10, sticky="W")
+    Motorola_Email_button.configure(style='White.TButton')
 
     #Brand Protection
     Test_Brand_button = ttk.Button(Menu_Top_Frame, text="Brand Test", command=Search_Page)
     Test_Brand_button.grid(row=0, column=7, padx=10, pady=10, sticky="W")
+    Test_Brand_button.configure(style='White.TButton')
     ## ------------------------------------#
 
     ## Spiders ###
     #Criando o LabelFrame
     Menu_Spiders = tk.LabelFrame(Main, text="SPIDERS")
-    Menu_Spiders.place(x=480, y=80)
+    Menu_Spiders.place(x=480, y=63)
 
     #Buttton de Amazon
     AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
@@ -342,6 +358,7 @@ def Main_Page():
     #Botão para procurar Manual
     Manual_Search_Button = ttk.Button(Menu_Spiders, text="Procura Manual", command=lambda: Start_Spiders(AmazonVar,KabumVar,MagazineVar,MercadoLVar,ShopeeVar,Brands_Choice.get()))
     Manual_Search_Button.grid(row=6, column=2,columnspan=2)
+    Manual_Search_Button.configure(style='White.TButton')
 
     #Botão para fazer revisão
     #Verification_Button = ttk.Button(Menu_Spiders, text="Verificação")
@@ -352,15 +369,15 @@ def Main_Page():
 
     ## --------------- LOGS ----------------------------------------- #
     #Criando a área de Logs
-    Logs_Frame = ttk.LabelFrame(Main, text="Registros")
-    Logs_Frame.place(x=15, y=80)
+    Logs_Frame = ttk.Frame(Main, style='Card.TFrame')
+    Logs_Frame.place(x=15, y=70)
 
     #Criando a lista
     #Logs_List = tk.Listbox(Logs_Frame, width=62, height=5)
     #Logs_List.grid(row=0, column=0, padx=5, pady=5)
     #Logs_get_data()
 
-    tabela = ttk.Treeview(Logs_Frame)
+    tabela = ttk.Treeview(Logs_Frame, height=7)
     tabela.grid(row=0, column=0, padx=5, pady=5)
 
     tabela['columns'] = ['DATA','HORA','SCRIPT','MARKETPLACE','BRAND','STATUS']

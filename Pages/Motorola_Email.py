@@ -52,9 +52,9 @@ def Get_Data_Padrao():
 #Função para criação da tabela ao lado 
 def Creating_DataVisualizer(choice, root, data):
     if choice == 'Padrao':
-        root.geometry('1220x300')
+        root.geometry('1320x300')
         tabela = ttk.Treeview(root)
-        tabela.place(x=230,y=30)
+        tabela.place(x=260,y=20)
 
         tabela['columns'] = ['DATE','PART','STORE','SELLER','S.PRICE','C.PRICE','I.PRICE','HIPERLINK','ITEM','PXP','ACTION']
         tabela.column("#0",width=0,stretch=NO)
@@ -118,39 +118,42 @@ def Motorola_Page():
     Motorola.geometry("350x200")
     Motorola.title("Turtle Brand Protection")
 
+    Motorola.tk.call("source", "azure.tcl")
+    Motorola.tk.call("set_theme", "light")
+
     #Botão E-mail padrão 
     Motorola_Daily_Button = ttk.Button(Motorola, text="E-mail padrão", command=Get_Data_Padrao)
     Motorola_Daily_Button.place(x=20, y=15)
 
     #Botão E-mail para Dave 
     Motorola_Dave_Button = ttk.Button(Motorola, text="E-mail Dave")
-    Motorola_Dave_Button.place(x=120, y=15)
+    Motorola_Dave_Button.place(x=150, y=15)
 
     Shape_Label = ttk.Label(Motorola,text="Quantidades de registros: ---")
-    Shape_Label.place(x=20, y=50)
+    Shape_Label.place(x=20, y=55)
 
     #Data antiga
     Minor_Date_Label = ttk.Label(Motorola,text="Data (antiga): --/--/----")
-    Minor_Date_Label.place(x=20, y=70)
+    Minor_Date_Label.place(x=20, y=75)
 
     #Data recente
     Maior_Date_Label = ttk.Label(Motorola,text="Data (Recente): --/--/----")
-    Maior_Date_Label.place(x=20, y=90)
+    Maior_Date_Label.place(x=20, y=95)
 
     #Data recente
     Max_Price_Cash_Label = ttk.Label(Motorola,text="Maior valor (Cash): -----")
-    Max_Price_Cash_Label.place(x=20, y=110)
+    Max_Price_Cash_Label.place(x=20, y=115)
 
     #Data recente
     Min_Price_Cash_Label = ttk.Label(Motorola,text="Menor valor (Cash): -----")
-    Min_Price_Cash_Label.place(x=20, y=130)
+    Min_Price_Cash_Label.place(x=20, y=135)
 
     #Data recente
     Max_Price_Installment_Label = ttk.Label(Motorola,text="Maior valor (Installment): -----")
-    Max_Price_Installment_Label.place(x=20, y=150)
+    Max_Price_Installment_Label.place(x=20, y=155)
 
     #Data recente
     Min_Price_Installmnet_Label = ttk.Label(Motorola,text="Menor valor (Installment): -----")
-    Min_Price_Installmnet_Label.place(x=20, y=170)
+    Min_Price_Installmnet_Label.place(x=20, y=175)
 
     Motorola.mainloop()
