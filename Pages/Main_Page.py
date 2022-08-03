@@ -44,134 +44,183 @@ def teste_status_bar():
     
     print(pb['value'])
 
+def Start_AliExpress(Marketplace_var, brand):
+    #Importando a função
+    global Ali_Status, pb_Ali
+
+    if Marketplace_var.get() == "Ligado":
+
+        pb_Ali = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Ali.grid(row=3,column=4,pady=(0,10))
+        Ali_Status.destroy()
+
+    else:
+        try:
+            Ali_Status.config(foreground="red", text="Desativado")
+        except:
+            Ali_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Ali_Status.grid(row=3,column=4,pady=(0,10))
+            pb_Ali.destroy()
+
 def Start_Amazon(Marketplace_var, brand):
     #Importando a função
     from Bots.Amazon import Amazon_Final
+    global Amazon_Status, pb_Amazon
 
     if Marketplace_var.get() == "Ligado":
-        global pb 
 
-        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb.grid(row=1,column=1,pady=(0,10))
+        pb_Amazon = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Amazon.grid(row=1,column=1,pady=(0,10))
 
-        #Amazon_Final(brand)
+        Amazon_Status.destroy()
 
     else:
-        Amazon_Status.config(foreground="red", text="Desativado")
+        try:
+            Amazon_Status.config(foreground="red", text="Desativado")
+        except:
+            Amazon_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Amazon_Status.grid(row=1,column=1,pady=(0,10))
+            pb_Amazon.destroy()
 
-#def Start_Americanas(Marketplace_var, brand):
+def Start_Americanas(Marketplace_var, brand):
     #Importando a função
-    #from Spiders.Americanas import americanas_final
+    global Americanas_Status, pb_Americanas
 
-    #if Marketplace_var.get() == "Ligado":
+    if Marketplace_var.get() == "Ligado":
 
-        #Americanas_Status.config(foreground="orange", text="Buscando")
+        pb_Americanas = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Americanas.grid(row=1,column=2,pady=(0,10))
 
-        #Americanas_Status.update_idletasks()
+        Americanas_Status.destroy()
 
-        #americanas_final(brand,'padronized')
+    else:
+        try:
+            Americanas_Status.config(foreground="red", text="Desativado")
+        except:
+            Americanas_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Americanas_Status.grid(row=1,column=2,pady=(0,10))
+            pb_Americanas.destroy()
 
-        #Americanas_Status.config(foreground="green", text="Finalizado")
-
-        #Americanas_Status.update_idletasks()
-    #else:
-        #Americanas_Status.config(foreground="red", text="Desativado")
-
-#def Start_Carrefour(Marketplace_var, brand):
+def Start_Carrefour(Marketplace_var, brand):
     #Importando a função
-    #from Spiders.Carrefour import carrefour_final
+    global Carrefour_Status, pb_Carrefour
 
-    #if Marketplace_var.get() == "Ligado":
+    if Marketplace_var.get() == "Ligado":
 
-        #Carrefour_Status.config(foreground="orange", text="Buscando")
+        pb_Carrefour = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Carrefour.grid(row=1,column=3,pady=(0,10))
 
-        #Carrefour_Status.update_idletasks()
+        Carrefour_Status.destroy()
 
-        #carrefour_final(brand,'padronized')
+    else:
+        try:
+            Carrefour_Status.config(foreground="red", text="Desativado")
+        except:
+            Carrefour_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Carrefour_Status.grid(row=1,column=3,pady=(0,10))
+            pb_Carrefour.destroy()
 
-        #Carrefour_Status.config(foreground="green", text="Finalizado")
-
-        #Carrefour_Status.update_idletasks()
-    #else:
-        #Carrefour_Status.config(foreground="red", text="Desativado")
-
-#def Start_Extra(Marketplace_var, brand):
+def Start_Extra(Marketplace_var, brand):
     #Importando a função
-    #from Spiders.Extra import ViaVarejo_final
+    global Extra_Status, pb_Extra
 
-    #if Marketplace_var.get() == "Ligado":
+    if Marketplace_var.get() == "Ligado":
 
-        #Extra_Status.config(foreground="orange", text="Buscando")
+        pb_Extra = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Extra.grid(row=1,column=4,pady=(0,10))
 
-        #Extra_Status.update_idletasks()
+        Extra_Status.destroy()
 
-        #ViaVarejo_final(brand,'padronized')
-
-        #Extra_Status.config(foreground="green", text="Finalizado")
-
-        #Extra_Status.update_idletasks()
-    #else:
-        #Extra_Status.config(foreground="red", text="Desativado")
-
-
+    else:
+        try:
+            Extra_Status.config(foreground="red", text="Desativado")
+        except:
+            Extra_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Extra_Status.grid(row=1,column=4,pady=(0,10))
+            pb_Extra.destroy()
 
 def Start_Kabum(Marketplace_var, brand):
     #Importando a função
-    from Bots.Kabum import Kabum_final
+    global Kabum_Status, pb_Kabum
 
     if Marketplace_var.get() == "Ligado":
 
-        pb_kabum = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb_kabum.grid(row=1,column=5,pady=(0,10))
+        pb_Kabum = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Kabum.grid(row=1,column=5,pady=(0,10))
 
-        Kabum_final(brand, pb_kabum,Main)
+        Kabum_Status.destroy()
+
     else:
-        Kabum_Status.config(foreground="red", text="Desativado")
+        try:
+            Kabum_Status.config(foreground="red", text="Desativado")
+        except:
+            Kabum_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Kabum_Status.grid(row=1,column=5,pady=(0,10))
+            pb_Kabum.destroy()
 
 def Start_Magazine(Marketplace_var, brand):
     #Importando a função
-    from Bots.Magalu import magalu_final
+    global Magazine_Status, pb_magazine
 
     if Marketplace_var.get() == "Ligado":
 
         pb_magazine = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
         pb_magazine.grid(row=3,column=1,pady=(0,10))
 
-        magalu_final(brand,pb_magazine,Main)
+        Magazine_Status.destroy()
 
     else:
-        Magazine_Status.config(foreground="red", text="Desativado")
+        try:
+            Magazine_Status.config(foreground="red", text="Desativado")
+        except:
+            Magazine_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Magazine_Status.grid(row=3,column=1,pady=(0,10))
+            pb_magazine.destroy()
 
 def Start_MercadoL(Marketplace_var, brand):
     #Importando a função
-    from Bots.Mercado_livre import Mercado_Livre_Final
+    global MercadoL_Status, pb_Mercado
 
     if Marketplace_var.get() == "Ligado":
 
-        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb.grid(row=3,column=3,pady=(0,10))
+        pb_Mercado = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Mercado.grid(row=3,column=2,pady=(0,10))
 
-        #Mercado_Livre_Final(brand)
+        MercadoL_Status.destroy()
 
     else:
-        MercadoL_Status.config(foreground="red", text="Desativado")
+        try:
+            MercadoL_Status.config(foreground="red", text="Desativado")
+        except:
+            MercadoL_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            MercadoL_Status.grid(row=3,column=2,pady=(0,10))
+            pb_Mercado.destroy()
 
 def Start_Shopee(Marketplace_var, brand):
-        #Importando a função
-    from Bots.Shopee import Shopee_final
+    #Importando a função
+    global Shopee_Status, pb_Shopee
 
     if Marketplace_var.get() == "Ligado":
 
-        pb = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
-        pb.grid(row=3,column=4,pady=(0,10))
+        pb_Shopee = ttk.Progressbar(Menu_Spiders, orient='horizontal',mode='determinate',length=70)
+        pb_Shopee.grid(row=3,column=3,pady=(0,10))
 
-        #Shopee_final(brand)
+        Shopee_Status.destroy()
 
     else:
-        Shopee_Status.config(foreground="red", text="Desativado")
+        try:
+            Shopee_Status.config(foreground="red", text="Desativado")
+        except:
+            Shopee_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+            Shopee_Status.grid(row=3,column=3,pady=(0,10))
+            pb_Shopee.destroy()
 
-def Start_Spiders(Amazon,Kabum,Magazine,mercado,shopee,brand_final):
+def Start_Spiders(AliExpress,Amazon,Americanas,Carrefour,Extra,Kabum,Magazine,mercado,shopee,brand_final):
+    Start_AliExpress(AliExpress, brand_final)
     Start_Amazon(Amazon, brand_final)
+    Start_Americanas(Americanas, brand_final)
+    Start_Carrefour(Carrefour, brand_final)
+    Start_Extra(Extra, brand_final)
     Start_Magazine(Magazine,brand_final)
     Start_MercadoL(mercado, brand_final)
     Start_Kabum(Kabum,brand_final)
@@ -214,7 +263,7 @@ def Main_Page():
     
 
     #DEFININCO OS GLOBAIS NECESSÁRIOS PARA OS SPIDERS
-    global Amazon_Status,Kabum_Status,Magazine_Status,MercadoL_Status,Shopee_Status
+    global Ali_Status,Amazon_Status,Americanas_Status,Carrefour_Status,Extra_Status,Kabum_Status,Magazine_Status,MercadoL_Status,Shopee_Status
     global Menu_Spiders, Main
     global s
 
@@ -356,7 +405,7 @@ def Main_Page():
     Menu_Brand_Element.grid(row=6, column=1, padx=10, pady=10, sticky="W")
 
     #Botão para procurar Manual
-    Manual_Search_Button = ttk.Button(Menu_Spiders, text="Procura Manual", command=lambda: Start_Spiders(AmazonVar,KabumVar,MagazineVar,MercadoLVar,ShopeeVar,Brands_Choice.get()))
+    Manual_Search_Button = ttk.Button(Menu_Spiders, text="Procura Manual", command=lambda: Start_Spiders(AliVar,AmazonVar,AmericanasVar,CarrefourVar,ExtraVar,KabumVar,MagazineVar,MercadoLVar,ShopeeVar,Brands_Choice.get()))
     Manual_Search_Button.grid(row=6, column=2,columnspan=2)
     Manual_Search_Button.configure(style='White.TButton')
 

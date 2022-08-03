@@ -52,6 +52,9 @@ def Login_Page():
     Login_root.tk.call("source", "azure.tcl")
     Login_root.tk.call("set_theme", "light")
 
+    style = ttk.Style()
+    style.configure("White.TButton", foreground='white')
+
     # Carregando a imagem
     load_img = Image.open('Img/horizontal_mono_preto.png').resize((250, 70))
 
@@ -81,17 +84,20 @@ def Login_Page():
     # Colocando botão de Login
     Button_Login = ttk.Button(Login_root, text='Login', width=20,command=lambda: User_verification(User_name.get(), Password.get(), Login_root))
     Button_Login.grid(row=4, column=0, pady=8, padx=8)
+    Button_Login.configure(style='White.TButton')
 
     Details_Login = ttk.Button(Login_root, text='App', width=20,command=details)
     Details_Login.grid(row=5, column=0, pady=8, padx=8)
+    Details_Login.configure(style='White.TButton')
 
     # Colocando de esqueceu a senha
     Button_Forget = ttk.Button(Login_root, text='Esqueceu a senha', width=20)
     Button_Forget.grid(row=4, column=1, pady=8, padx=8)
+    Button_Forget.configure(style='White.TButton')
 
 
 
     Login_root.mainloop()
 
-#Login_Page()
-Main_Page()
+Login_Page()
+#Main_Page()
