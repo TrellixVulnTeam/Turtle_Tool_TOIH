@@ -121,13 +121,18 @@ def Motorola_Page():
     Motorola.tk.call("source", "azure.tcl")
     Motorola.tk.call("set_theme", "light")
 
+    style = ttk.Style(Motorola)
+    style.configure("White.TButton", foreground='white')
+
     #Botão E-mail padrão 
     Motorola_Daily_Button = ttk.Button(Motorola, text="E-mail padrão", command=Get_Data_Padrao)
     Motorola_Daily_Button.place(x=20, y=15)
+    Motorola_Daily_Button.configure(style='White.TButton')
 
     #Botão E-mail para Dave 
     Motorola_Dave_Button = ttk.Button(Motorola, text="E-mail Dave")
     Motorola_Dave_Button.place(x=150, y=15)
+    Motorola_Dave_Button.configure(style='White.TButton')
 
     Shape_Label = ttk.Label(Motorola,text="Quantidades de registros: ---")
     Shape_Label.place(x=20, y=55)

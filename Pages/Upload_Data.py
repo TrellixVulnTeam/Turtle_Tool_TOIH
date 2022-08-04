@@ -1,5 +1,4 @@
 #|Importando a bibliotecas
-import tkinter
 import tkinter as tk
 from tkinter import ttk
 import pymysql
@@ -59,6 +58,7 @@ def Inspec_data(brand_name):
 
     #Atualizando botão
     Main_Button.config(text='Subir Dados', command=lambda: Upload_to_aws(data_filtrada, brand_name))
+    Main_Button.configure(style='White.TButton')
 
 #Função para baixar os logs que vai enviar para o banco de dados e salvare 
 def Log_registration(dataset, brand):
@@ -121,16 +121,19 @@ def Upload_data():
     global Main_Button
 
     Upload_Page = tk.Tk()
-    Upload_Page.geometry("360x180")
     Upload_Page.title("Turtle Brand Protection")
+    Upload_Page.geometry("360x180")    
 
     Upload_Page.tk.call("source", "azure.tcl")
     Upload_Page.tk.call("set_theme", "light")
 
+    style = ttk.Style(Upload_Page)
+    style.configure("White.TButton", foreground='white')
+
     #Utilizando a função
     Brands = list(getting_brands())
     #Criando o Value inside
-    Brands_Choice = tkinter.StringVar(Upload_Page)
+    Brands_Choice = tk.StringVar(Upload_Page)
     Brands_Choice.set(Brands[0])
 
     #Criando o elemento de Menu
@@ -140,6 +143,8 @@ def Upload_data():
     #Botão para inspeção e posteriormente upload
     Main_Button = ttk.Button(Upload_Page, text="Inspecionar", command=lambda: Inspec_data(Brands_Choice.get()))
     Main_Button.place(x=10,y=60)
+    Main_Button.configure(style="White.TButton")
+    
 
     #Criando as Labels referente aos dados
     #Tamanho dos dados

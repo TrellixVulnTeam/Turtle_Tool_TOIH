@@ -1,6 +1,6 @@
 #Importando as bibliotecas 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import Toplevel, ttk
 from tkinter.messagebox import NO
 
 import time
@@ -270,13 +270,13 @@ def Main_Page():
 # Criando a página
     Main = tk.Tk()
     Main.title("Turtle Brand Protection - V.1")
-    Main.geometry('1100x400')
+    Main.geometry('1050x300')
 
     Main.tk.call("source", "azure.tcl")
     Main.tk.call("set_theme", "light")
 
     ############ ESTILOS ##########################
-    style = ttk.Style()
+    style = ttk.Style(Main)
     style.configure("White.TButton", foreground='white')
     
     #Carreando a imagem

@@ -10,6 +10,7 @@ import pymysql
 from Automatic_Scripts.Inventory.Python_Files.Inventory import Estoque
 from Pages.Add_Brands import Add_brand
 
+
 #Registro de inventario
 def Logs_records(table):
     global list
@@ -82,9 +83,14 @@ def Add_inventory_urls_page():
     Page_Add.tk.call("source", "azure.tcl")
     Page_Add.tk.call("set_theme", "light")
 
+    style = ttk.Style(Page_Add)
+    style.configure("White.TButton", foreground='white')
+
     #Label Principal
     Principal_message = ttk.Label(Page_Add, text="Coloque as informações para subir")
     Principal_message.grid(row=1, column=1, padx=10, pady=10, sticky="N")
+
+    
 
     #Label id 
     Id_Label = ttk.Label(Page_Add, text="Coloque ID")
@@ -135,6 +141,7 @@ def Add_inventory_urls_page():
     #Botão para adicionar 
     Add_Button = ttk.Button(Page_Add, text="Adicionar URL", command=lambda: Add_urls(Id_Entry.get(),Store_Entry.get(),Fromto_Entry.get(),Seller_Entry.get(),Hiperlink_Entry.get(),Item_Entry.get()))
     Add_Button.grid(row=14, column=1, padx=10, pady=15)
+    Add_Button.configure(style="White.TButton")
 
     #COLOCANDO A TABELA DE INVENTORY 
     Inventory_table = ttk.Treeview(Page_Add, height=15)
@@ -173,6 +180,9 @@ def Inventory_Page():
     Page.tk.call("source", "azure.tcl")
     Page.tk.call("set_theme", "light")
 
+    style = ttk.Style(Page)
+    style.configure("White.TButton", foreground='white')
+
 
     connection = pymysql.connect(host='mysqlserver.cnzboqhfvndh.sa-east-1.rds.amazonaws.com',
                              user='admin',
@@ -194,8 +204,10 @@ def Inventory_Page():
 
     Manual_Push = ttk.Button(Page, text="Puxar Manual", command=Estoque)
     Manual_Push.grid(row=2, column=1, padx=5, pady=5, sticky="W")
+    Manual_Push.configure(style="White.TButton")
 
     Insert_url = ttk.Button(Page, text="Adicionar URL", command=Add_inventory_urls_page)
     Insert_url.grid(row=2, column=2, padx=5, pady=5, sticky="W")
+    Insert_url.configure(style="White.TButton")
 
     Page.mainloop()
