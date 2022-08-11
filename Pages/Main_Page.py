@@ -1,9 +1,9 @@
 #Importando as bibliotecas 
 import tkinter as tk
-from tkinter import Toplevel, ttk
+from tkinter import Frame, Toplevel, ttk
 from tkinter.messagebox import NO
 
-import time
+import datetime
 from turtle import bgcolor
 
 import pandas as pd
@@ -34,6 +34,20 @@ def Create_Status(Frame_name, Text_value, Color):
     Text_Status = ttk.Label(Frame_name, text=Text_value)
     Text_Status.config(foreground=Color)
     return Text_Status
+
+#Função para criar cartões do dia 
+def Card_Element(Frame_name, Day_row, Day_column):
+    #Pegando o dia de hoje 
+    Hoje_full = datetime.datetime.now()
+
+    Week_Name = Hoje_full.strftime("%A")
+    Day = Hoje_full.day
+
+    WeekName_Text = ttk.Label(Frame_name, text=Week_Name)
+    WeekName_Text.place(x=Day_row, y=Day_column)
+
+    Day_Text = ttk.Label(Frame_name, text=Day)
+    Day_Text.place(x=Day_row, y=Day_column+20)
 
 
 #################### FUNÇÕES DE SPIDERS ##########################
@@ -270,7 +284,7 @@ def Main_Page():
 # Criando a página
     Main = tk.Tk()
     Main.title("Turtle Brand Protection - V.1")
-    Main.geometry('1050x300')
+    Main.geometry('1050x400')
 
     Main.tk.call("source", "azure.tcl")
     Main.tk.call("set_theme", "light")
@@ -288,6 +302,18 @@ def Main_Page():
     #Colocando a imagem
     Img_label = tk.Label(Main, image=Img, width=40, height=50)
     Img_label.place(x=15,y=0)
+
+    #Carreando a imagem
+    rec = Image.open('Img/Rectangle 1.png').resize((40,50))
+    canvas = tk.Canvas(Main, width=40, height=50)
+    canvas.place(x=25,y=310)
+    canvas.background = rec
+
+
+
+
+
+
 
     ## ------------ MENU ------------------#
     #Colocando um menu
@@ -454,6 +480,9 @@ def Main_Page():
 
 
     ## CENTRAL DE AVISOS ##
+
+    ######### CARD DAYS ####################
+    Card_Element(Main, 25,310)
 
 
 
