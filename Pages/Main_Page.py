@@ -1,10 +1,12 @@
 #Importando as bibliotecas 
+from email.mime import image
 import tkinter as tk
-from tkinter import Frame, Toplevel, ttk
+from tkinter import ANCHOR, Frame, PhotoImage, Toplevel, ttk
 from tkinter.messagebox import NO
+import os
 
 import datetime
-from turtle import bgcolor
+from turtle import bgcolor, width
 
 import pandas as pd
 from PIL import ImageTk, Image
@@ -22,6 +24,22 @@ from Pages.Motorola_Email import Motorola_Page
 
 
 ####  FUNÇÕES DE ELEMENTOS TKINTER #######
+#Função para carregar imagens 
+def Load_Image(Frame_Name,Image_Name, sizex,sizey,row, column):
+    #Carreando a imagem
+    load_imagem_file = Image.open(Image_Name).resize((sizex,sizey))
+
+    #Renderizando a imagem
+    element_image = ImageTk.PhotoImage(load_imagem_file)
+
+    #Colocando a imagem
+    Img_label = tk.Label(Frame_Name, image=element_image)
+    
+    
+    Img_label.place(x=row,y=column)
+
+    return Img_label
+
 #Função para criar CeckButton
 def Create_Checkbutton(Frame_name, Text_value, Variable_Value, grid_row, grid_column):
     CheckButton = ttk.Checkbutton(Frame_name, text=Text_value, variable=Variable_Value, onvalue="Ligado", offvalue="Desligado")
@@ -36,18 +54,86 @@ def Create_Status(Frame_name, Text_value, Color):
     return Text_Status
 
 #Função para criar cartões do dia 
-def Card_Element(Frame_name, Day_row, Day_column):
+def KPI_CARD(Frame_name, Row, Column):
+    ##### WEEK AND DAY LEFT END ######################
     #Pegando o dia de hoje 
     Hoje_full = datetime.datetime.now()
 
+    #Pegando o nome do dia da semana
     Week_Name = Hoje_full.strftime("%A")
+    #Deixando o dia da semana com forma simplificada 
+    Week_Name = Week_Name[0:3].upper()
+
+    #Colocando a Label do dia da semana 
+    WeekName_Label = ttk.Label(Frame_name, text=Week_Name, font=('Arial',10,'bold'))
+    WeekName_Label.place(x=Row, y=Column)
+    WeekName_Label.config(background='#3670A6', foreground="white")
+
+    #Pegando o dia do mês 
     Day = Hoje_full.day
 
-    WeekName_Text = ttk.Label(Frame_name, text=Week_Name)
-    WeekName_Text.place(x=Day_row, y=Day_column)
+    #Colocando o dia no espaço certo 
+    DayText = ttk.Label(Frame_name, text=Day, font=('Arial',23))
+    DayText.place(x=Row-3,y=Column+20)
+    DayText.config(background='#3670A6', foreground="white")
 
-    Day_Text = ttk.Label(Frame_name, text=Day)
-    Day_Text.place(x=Day_row, y=Day_column+20)
+    ############## Colocando as informações dos markerdots ########################
+    Hours_text = "2h30"
+    Hour = ttk.Label(Main,text=Hours_text,font=('Arial',10,'bold'))
+    Hour.config(background='#719AC0', foreground="black")
+    Hour.place(x=230,y=79)
+
+    Urls_text = "1352"
+    Urls = ttk.Label(Main,text=Urls_text,font=('Arial',10,'bold'))
+    Urls.config(background='#719AC0', foreground="#59DDAA")
+    Urls.place(x=230,y=99)
+
+    Erros_text = "8"
+    Erros = ttk.Label(Main,text=Erros_text,font=('Arial',10,'bold'))
+    Erros.config(background='#719AC0', foreground="#C54218")
+    Erros.place(x=230,y=119)
+
+
+    
+
+    #Carreando a imagem
+    #load_rec = Image.open('Img/markerContainer_1.png').resize((8,8))
+
+    #Renderizando a imagem
+    #img_rec = ImageTk.PhotoImage(load_rec)
+
+    #Colocando a imagem
+    #Img_label = tk.Label(Main, image=img_rec, width=8, height=8)
+    
+    #Img_label.place(x=200,y=100)
+    #path = "Img/bola-verde.png"
+    #load_img = Image.open(path)
+    #img = ImageTk.PhotoImage(load_img)
+    #panel = tk.Label(Main, image=img, width=8, height=8)
+    #panel.photo = img
+    #panel.place(x=100,y=100)
+
+
+    #Day = Hoje_full.day
+
+    #WeekName_Text = ttk.Label(Frame_name, text=Week_Name)
+    #WeekName_Text.place(x=Day_row, y=Day_column)
+
+    #Day_Text = ttk.Label(Frame_name, text=Day)
+    #Day_Text.place(x=Day_row, y=Day_column+20)
+
+    #number_of_spiders = 9 
+
+    #text_spiders = "{} de {}".format(str(3),str(number_of_spiders))
+    #por_spiders = "{:.2f}".format(4 / number_of_spiders)
+
+    #Spiders_Text = ttk.Label(Frame_name, text=text_spiders)
+    #Spiders_Text.config(background='#E21B1B')
+    #Spiders_Text.place(x=Day_row+80, y=Day_column)
+    
+    #Spiders_por = ttk.Label(Frame_name, text=por_spiders)
+    #Spiders_por.place(x=Day_row+80, y=Day_column+20)
+
 
 
 #################### FUNÇÕES DE SPIDERS ##########################
@@ -272,7 +358,7 @@ def Logs_records(table):
 
 
 def Main_Page():
-
+   
     #Style
     
 
@@ -284,7 +370,7 @@ def Main_Page():
 # Criando a página
     Main = tk.Tk()
     Main.title("Turtle Brand Protection - V.1")
-    Main.geometry('1050x400')
+    Main.geometry('1200x500')
 
     Main.tk.call("source", "azure.tcl")
     Main.tk.call("set_theme", "light")
@@ -294,146 +380,171 @@ def Main_Page():
     style.configure("White.TButton", foreground='white')
     
     #Carreando a imagem
-    load_img = Image.open('Img/Logo_pequeno.png').resize((40,50))
+    load_img = Image.open('Img/Logo_pequeno.png').resize((35,44))
 
     #Renderizando a imagem
     Img = ImageTk.PhotoImage(load_img)
 
     #Colocando a imagem
-    Img_label = tk.Label(Main, image=Img, width=40, height=50)
+    Img_label = tk.Label(Main, image=Img, width=35, height=44)
     Img_label.place(x=15,y=0)
-
-    #Carreando a imagem
-    rec = Image.open('Img/Rectangle 1.png').resize((40,50))
-    canvas = tk.Canvas(Main, width=40, height=50)
-    canvas.place(x=25,y=310)
-    canvas.background = rec
-
-
-
 
 
 
 
     ## ------------ MENU ------------------#
     #Colocando um menu
-    Menu_Top_Frame = ttk.Frame(Main, style='Card.TFrame')
-    Menu_Top_Frame.place(x=80, y=1)
+    #Menu_Top_Frame = ttk.Frame(Main, style='Card.TFrame')
+    #Menu_Top_Frame.place(x=80, y=1)
 
     #Home
-    New_Brand_button = ttk.Button(Menu_Top_Frame, text="Databases",command=Add_Page)
-    New_Brand_button.grid(row=0, column=0, padx=10, pady=10, sticky="W")
-    New_Brand_button.configure(style='White.TButton')
+    New_Brand_button = ttk.Button(Main, text="Databases",width=13,command=Add_Page)
+    New_Brand_button.place(x=70,y=10)
 
     #Brand Protection
-    Upload_Data_button = ttk.Button(Menu_Top_Frame, text="Upload Data", command=Upload_data)
-    Upload_Data_button.grid(row=0, column=1, padx=10, pady=10, sticky="W")
-    Upload_Data_button.configure(style='White.TButton')
+    Upload_Data_button = ttk.Button(Main, text="Upload Data",width=13, command=Upload_data)
+    Upload_Data_button.place(x=200,y=10)
 
     #Brand Protection
-    Catalogo_button = ttk.Button(Menu_Top_Frame, text="Catálogo")
-    Catalogo_button.grid(row=0, column=2, padx=10, pady=10, sticky="W")
-    Catalogo_button.configure(style='White.TButton')
+    Catalogo_button = ttk.Button(Main, text="Catálogo",width=13)
+    Catalogo_button.place(x=330,y=10)
 
     #Brand Protection
-    Inventory_button = ttk.Button(Menu_Top_Frame, text="Inventory", command=Inventory_Page)
-    Inventory_button.grid(row=0, column=3, padx=10, pady=10, sticky="W")
-    Inventory_button.configure(style='White.TButton')
+    Inventory_button = ttk.Button(Main, text="Inventory",width=13, command=Inventory_Page)
+    Inventory_button.place(x=460,y=10)
 
     #Brand Protection
-    Dashboard_button = ttk.Button(Menu_Top_Frame, text="Dashboard")
-    Dashboard_button.grid(row=0, column=4, padx=10, pady=10, sticky="W")
-    Dashboard_button.configure(style='White.TButton')
+    Dashboard_button = ttk.Button(Main,text="Dashboard",width=13)
+    Dashboard_button.place(x=590,y=10)
 
     #Brand Protection
-    Search_Urls_button = ttk.Button(Menu_Top_Frame, text="Automatics")
-    Search_Urls_button.grid(row=0, column=5, padx=10, pady=10, sticky="W")
-    Search_Urls_button.configure(style='White.TButton')
+    Search_Urls_button = ttk.Button(Main, text="Automatics",width=13)
+    Search_Urls_button.place(x=720,y=10)
 
     #Brand Protection
-    Motorola_Email_button = ttk.Button(Menu_Top_Frame, text="Motorola Email", command=Motorola_Page)
-    Motorola_Email_button.grid(row=0, column=6, padx=10, pady=10, sticky="W")
-    Motorola_Email_button.configure(style='White.TButton')
+    Motorola_Email_button = ttk.Button(Main, text="Motorola Email",width=13, command=Motorola_Page)
+    Motorola_Email_button.place(x=850,y=10)
 
     #Brand Protection
-    Test_Brand_button = ttk.Button(Menu_Top_Frame, text="Brand Test", command=Search_Page)
-    Test_Brand_button.grid(row=0, column=7, padx=10, pady=10, sticky="W")
-    Test_Brand_button.configure(style='White.TButton')
+    Test_Brand_button = ttk.Button(Main, text="Brand Test",width=13, command=Search_Page)
+    Test_Brand_button.place(x=980,y=10)
     ## ------------------------------------#
+
+    ## ------------------------ KPI CARD --------------------------------------- ##
+    #Carreando a imagem
+    load_background = Image.open('Img/Barra-KPICARD.png').resize((587,80))
+
+    #Renderizando a imagem
+    img_background = ImageTk.PhotoImage(load_background)
+
+    #Colocando a imagem
+    KPI_CANVA = tk.Canvas(Main, width=587, height=80)
+    KPI_CANVA.place(x=20,y=70)
+    KPI_CANVA.create_image(587,80,image=img_background, anchor='se')
+
+    MarkerHours_render_hours = Image.open("Img/MarkerDots/bola-preta.png").resize((8,8))
+    MarkerHours_img_hours = ImageTk.PhotoImage(MarkerHours_render_hours)
+    KPI_CANVA.create_image(100,20,image=MarkerHours_img_hours)
+
+    MarkerHours_Hours_Text_1 = ttk.Label(Main,text="Hours",font=('Arial',10,'bold')) 
+    MarkerHours_Hours_Text_1.config(background='#719AC0', foreground="black")
+    MarkerHours_Hours_Text_1.place(x=125,y=79)
+
+    MarkerHours_render_urls = Image.open("Img/MarkerDots/bola-verde.png").resize((8,8))
+    MarkerHours_img_urls = ImageTk.PhotoImage(MarkerHours_render_urls)
+    KPI_CANVA.create_image(100,40,image=MarkerHours_img_urls)
+
+    MarkerHours_urls_Text_1 = ttk.Label(Main,text="Urls Colected",font=('Arial',10,'bold')) 
+    MarkerHours_urls_Text_1.config(background='#719AC0', foreground="#59DDAA")
+    MarkerHours_urls_Text_1.place(x=125,y=99)
+
+    MarkerHours_render_erros = Image.open("Img/MarkerDots/bola-vermelha.png").resize((8,8))
+    MarkerHours_img_erros = ImageTk.PhotoImage(MarkerHours_render_erros)
+    KPI_CANVA.create_image(100,60,image=MarkerHours_img_erros)
+
+    MarkerHours_erros_Text_1 = ttk.Label(Main,text="Erros",font=('Arial',10,'bold')) 
+    MarkerHours_erros_Text_1.config(background='#719AC0', foreground="#C54218")
+    MarkerHours_erros_Text_1.place(x=125,y=119)
+
+
+
+    KPI_CARD(Main, 40,80)
+
+
 
     ## Spiders ###
     #Criando o LabelFrame
-    Menu_Spiders = tk.LabelFrame(Main, text="SPIDERS")
-    Menu_Spiders.place(x=480, y=63)
+    #Menu_Spiders = tk.LabelFrame(Main, text="SPIDERS")
+    #Menu_Spiders.place(x=480, y=63)
 
     #Buttton de Amazon
-    AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Amazon',AmazonVar,0,1)
-    Amazon_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Amazon_Status.grid(row=1,column=1,pady=(0,10))
+    #AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Amazon',AmazonVar,0,1)
+    #Amazon_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Amazon_Status.grid(row=1,column=1,pady=(0,10))
 
     #Buttton de Americanas
-    AmericanasVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Americanas',AmericanasVar,0,2)
-    Americanas_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Americanas_Status.grid(row=1,column=2,pady=(0,10))
+    #AmericanasVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Americanas',AmericanasVar,0,2)
+    #Americanas_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Americanas_Status.grid(row=1,column=2,pady=(0,10))
 
     #Buttton de Carrefour
-    CarrefourVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Carrefour',CarrefourVar,0,3)
-    Carrefour_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Carrefour_Status.grid(row=1,column=3,pady=(0,10))
+    #CarrefourVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Carrefour',CarrefourVar,0,3)
+    #Carrefour_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Carrefour_Status.grid(row=1,column=3,pady=(0,10))
 
     #Buttton de Extra
-    ExtraVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Extra',ExtraVar,0,4)
-    Extra_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Extra_Status.grid(row=1,column=4,pady=(0,10))
+    #ExtraVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Extra',ExtraVar,0,4)
+    #Extra_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Extra_Status.grid(row=1,column=4,pady=(0,10))
 
     #Buttton de Kabum
-    KabumVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Kabum',KabumVar,0,5)
-    Kabum_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Kabum_Status.grid(row=1,column=5,pady=(0,10))
+    #KabumVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Kabum',KabumVar,0,5)
+    #Kabum_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Kabum_Status.grid(row=1,column=5,pady=(0,10))
 
     #Buttton de Magazine
-    MagazineVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Magazine',MagazineVar,2,1)
-    Magazine_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Magazine_Status.grid(row=3,column=1,pady=(0,10))
+    #MagazineVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Magazine',MagazineVar,2,1)
+    #Magazine_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Magazine_Status.grid(row=3,column=1,pady=(0,10))
 
     #Buttton de Mercado
-    MercadoLVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'MercadoL',MercadoLVar,2,2)
-    MercadoL_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    MercadoL_Status.grid(row=3,column=2,pady=(0,10))
+    #MercadoLVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'MercadoL',MercadoLVar,2,2)
+    #MercadoL_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #MercadoL_Status.grid(row=3,column=2,pady=(0,10))
 
     #Buttton de Shopee
-    ShopeeVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'Shopee',ShopeeVar,2,3)
-    Shopee_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Shopee_Status.grid(row=3,column=3,pady=(0,10))
+    #ShopeeVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'Shopee',ShopeeVar,2,3)
+    #Shopee_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Shopee_Status.grid(row=3,column=3,pady=(0,10))
 
     #Buttton de AliExpress
-    AliVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    Create_Checkbutton(Menu_Spiders, 'AliExpress',AliVar,2,4)
-    Ali_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    Ali_Status.grid(row=3,column=4,pady=(0,10))
+    #AliVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    #Create_Checkbutton(Menu_Spiders, 'AliExpress',AliVar,2,4)
+    #Ali_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    #Ali_Status.grid(row=3,column=4,pady=(0,10))
 
     #Utilizando a função
-    Brands = list(getting_brands())
+    #Brands = list(getting_brands())
     #Criando o Value inside
-    Brands_Choice = tk.StringVar(Menu_Spiders)
+    #Brands_Choice = tk.StringVar(Menu_Spiders)
     # Brands_Choice.set(Brands[0])
 
     #Criando o elemento de Menu
-    Menu_Brand_Element = ttk.OptionMenu(Menu_Spiders, Brands_Choice, *Brands)
-    Menu_Brand_Element.grid(row=6, column=1, padx=10, pady=10, sticky="W")
+    #Menu_Brand_Element = ttk.OptionMenu(Menu_Spiders, Brands_Choice, *Brands)
+    #Menu_Brand_Element.grid(row=6, column=1, padx=10, pady=10, sticky="W")
 
     #Botão para procurar Manual
-    Manual_Search_Button = ttk.Button(Menu_Spiders, text="Procura Manual", command=lambda: Start_Spiders(AliVar,AmazonVar,AmericanasVar,CarrefourVar,ExtraVar,KabumVar,MagazineVar,MercadoLVar,ShopeeVar,Brands_Choice.get()))
-    Manual_Search_Button.grid(row=6, column=2,columnspan=2)
-    Manual_Search_Button.configure(style='White.TButton')
+    #Manual_Search_Button = ttk.Button(Menu_Spiders, text="Procura Manual", command=lambda: Start_Spiders(AliVar,AmazonVar,AmericanasVar,CarrefourVar,ExtraVar,KabumVar,MagazineVar,MercadoLVar,ShopeeVar,Brands_Choice.get()))
+    #Manual_Search_Button.grid(row=6, column=2,columnspan=2)
+    #Manual_Search_Button.configure(style='White.TButton')
 
     #Botão para fazer revisão
     #Verification_Button = ttk.Button(Menu_Spiders, text="Verificação")
@@ -444,45 +555,51 @@ def Main_Page():
 
     ## --------------- LOGS ----------------------------------------- #
     #Criando a área de Logs
-    Logs_Frame = ttk.Frame(Main, style='Card.TFrame')
-    Logs_Frame.place(x=15, y=70)
+    #Logs_Frame = ttk.Frame(Main, style='Card.TFrame')
+    #Logs_Frame.place(x=15, y=70)
 
     #Criando a lista
     #Logs_List = tk.Listbox(Logs_Frame, width=62, height=5)
     #Logs_List.grid(row=0, column=0, padx=5, pady=5)
     #Logs_get_data()
 
-    tabela = ttk.Treeview(Logs_Frame, height=7)
-    tabela.grid(row=0, column=0, padx=5, pady=5)
+    #tabela = ttk.Treeview(Logs_Frame, height=7)
+    #tabela.grid(row=0, column=0, padx=5, pady=5)
 
-    tabela['columns'] = ['DATA','HORA','SCRIPT','MARKETPLACE','BRAND','STATUS']
-    tabela.column("#0",width=0,stretch=NO)
+    #tabela['columns'] = ['DATA','HORA','SCRIPT','MARKETPLACE','BRAND','STATUS']
+    #tabela.column("#0",width=0,stretch=NO)
 
-    tabela.column("DATA",anchor='n',width=60)
-    tabela.heading("DATA",text="DATA",anchor='n')
+    #tabela.column("DATA",anchor='n',width=60)
+    #tabela.heading("DATA",text="DATA",anchor='n')
     
-    tabela.column("HORA",anchor='n',width=40)
-    tabela.heading("HORA",text="HORA",anchor='n')
+    #tabela.column("HORA",anchor='n',width=40)
+    #tabela.heading("HORA",text="HORA",anchor='n')
 
-    tabela.column("SCRIPT",anchor='n',width=50)
-    tabela.heading("SCRIPT",text="SCRIPT",anchor='n')
+    #tabela.column("SCRIPT",anchor='n',width=50)
+    #tabela.heading("SCRIPT",text="SCRIPT",anchor='n')
 
-    tabela.column("MARKETPLACE",anchor='n',width=90)
-    tabela.heading("MARKETPLACE",text="MARKETPLACE",anchor='n')
+    #tabela.column("MARKETPLACE",anchor='n',width=90)
+    #tabela.heading("MARKETPLACE",text="MARKETPLACE",anchor='n')
 
-    tabela.column("BRAND",anchor='n',width=70)
-    tabela.heading("BRAND",text="BRAND",anchor='n')
+    #tabela.column("BRAND",anchor='n',width=70)
+    #tabela.heading("BRAND",text="BRAND",anchor='n')
 
-    tabela.column("STATUS",anchor='n',width=80)
-    tabela.heading("STATUS",text="STATUS",anchor='n')
+    #tabela.column("STATUS",anchor='n',width=80)
+    #tabela.heading("STATUS",text="STATUS",anchor='n')
 
-    Logs_records(tabela)
+    #Logs_records(tabela)
 
 
     ## CENTRAL DE AVISOS ##
 
     ######### CARD DAYS ####################
-    Card_Element(Main, 25,310)
+   
+
+    
+
+
+
+
 
 
 
