@@ -137,13 +137,6 @@ def KPI_CARD(Frame_name, Row, Column):
 
 
 #################### FUNÇÕES DE SPIDERS ##########################
-def teste_status_bar():
-
-    if pb['value'] < 100:
-        pb['value'] += 20
-    
-    print(pb['value'])
-
 def Start_AliExpress(Marketplace_var, brand):
     #Importando a função
     global Ali_Status, pb_Ali
@@ -394,9 +387,6 @@ def Main_Page():
 
     ## ------------ MENU ------------------#
     #Colocando um menu
-    #Menu_Top_Frame = ttk.Frame(Main, style='Card.TFrame')
-    #Menu_Top_Frame.place(x=80, y=1)
-
     #Home
     New_Brand_button = ttk.Button(Main, text="Databases",width=13,command=Add_Page)
     New_Brand_button.place(x=70,y=10)
@@ -466,22 +456,78 @@ def Main_Page():
     MarkerHours_erros_Text_1.config(background='#719AC0', foreground="#C54218")
     MarkerHours_erros_Text_1.place(x=125,y=119)
 
-
-
     KPI_CARD(Main, 40,80)
 
+    ##################### AREA SPIDERS #####################################
+    #Menu_Top_Frame = ttk.Frame(Main, style='Card.TFrame')
+    #Menu_Top_Frame.place(x=80, y=1)
+
+    Menu_Spiders = ttk.Frame(Main, style='Card.TFrame')
+    Menu_Spiders.place(x=620, y=71)
+
+    ### Spiders And Status ##
+    #ALIEXPRESS
+    AliExpressVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'AliExpress',AliExpressVar,0,1)
+    AliExpress_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    AliExpress_Status.grid(row=1,column=1,pady=(0,10))
 
 
-    ## Spiders ###
-    #Criando o LabelFrame
-    #Menu_Spiders = tk.LabelFrame(Main, text="SPIDERS")
-    #Menu_Spiders.place(x=480, y=63)
+    #AMAZON
+    AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Amazon',AmazonVar,0,2)
+    Amazon_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    Amazon_Status.grid(row=1,column=2,pady=(0,10))
 
-    #Buttton de Amazon
-    #AmazonVar = tk.StringVar(Menu_Spiders, value="Desligado")
-    #Create_Checkbutton(Menu_Spiders, 'Amazon',AmazonVar,0,1)
-    #Amazon_Status = Create_Status(Menu_Spiders, 'Desligado','red')
-    #Amazon_Status.grid(row=1,column=1,pady=(0,10))
+    #B2W
+    B2WVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'B2W',B2WVar,0,3)
+    B2W_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    B2W_Status.grid(row=1,column=3,pady=(0,10))
+    
+    #CARREFOUR
+    CarrefourVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Carrefour',CarrefourVar,0,4)
+    CarrefourVar_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    CarrefourVar_Status.grid(row=1,column=4,pady=(0,10))
+
+    #KABUM
+    KabumVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Kabum',KabumVar,0,5)
+    Kabum_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    Kabum_Status.grid(row=1,column=5,pady=(0,10))
+
+    #MAGAZINE LUIZA
+    MagaluVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Magazine Luiza',MagaluVar,2,1)
+    Magalu_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    Magalu_Status.grid(row=3,column=1,pady=(0,10))
+
+    #MERCADO LIVRE
+    MercadoLivreVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Mercado Livre',MercadoLivreVar,2,2)
+    MercadoLivre_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    MercadoLivre_Status.grid(row=3,column=2,pady=(0,10))
+
+    #SHOPEE
+    ShopeeVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Shopee',ShopeeVar,2,3)
+    Shopee_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    Shopee_Status.grid(row=3,column=3,pady=(0,10))
+
+    #VIAVAREJO
+    ViaVarejoVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Via Varejo',ViaVarejoVar,2,4)
+    ViaVarejo_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    ViaVarejo_Status.grid(row=3,column=4,pady=(0,10))
+
+    #ZOOM
+    ZoomVar = tk.StringVar(Menu_Spiders, value="Desligado")
+    Create_Checkbutton(Menu_Spiders, 'Zoom',ZoomVar,2,5)
+    Zoom_Status = Create_Status(Menu_Spiders, 'Desligado','red')
+    Zoom_Status.grid(row=3,column=5,pady=(0,10))
+
+
 
     #Buttton de Americanas
     #AmericanasVar = tk.StringVar(Menu_Spiders, value="Desligado")
